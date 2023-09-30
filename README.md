@@ -51,3 +51,14 @@
 => https://youtu.be/XRWnM51Cd7o
 #### ReactJS + Spring Boot CRUD Full Stack App - 25 - It's Demo Time and Source Code on GitHub
 => https://youtu.be/FX5HE_gnOTI
+
+
+#spring.datasource.url=jdbc:mysql://localhost:3306/employee_management_system?useSSL=false
+#spring.datasource.username=root
+#spring.datasource.password=root
+
+#spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQLDialect
+
+#spring.jpa.hibernate.ddl-auto = update
+
+
