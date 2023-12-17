@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import net.javaguides.springboot.model.AuthenticationRequest;
 import net.javaguides.springboot.repository.UserDAO;
 import net.javaguides.springboot.util.JWTUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
+    @Autowired
     private final AuthenticationManager authenticationManager;
 
     private final UserDAO userDAO;
