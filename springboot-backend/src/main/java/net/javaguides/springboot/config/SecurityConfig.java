@@ -58,16 +58,13 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-                // We can connect to DB and fetch the details
-                return APPLICATION_USERS
-                        .stream()
-                        .filter(u -> u.getUsername().equals(email))
-                        .findFirst()
-                        .orElseThrow(() -> new UsernameNotFoundException("No user was found"));
-            }
+        return email -> {
+            // We can connect to DB and fetch the details
+            return APPLICATION_USERS
+                    .stream()
+                    .filter(u -> u.getUsername().equals(email))
+                    .findFirst()
+                    .orElseThrow(() -> new UsernameNotFoundException("No user was found"));
         };
     }
 
