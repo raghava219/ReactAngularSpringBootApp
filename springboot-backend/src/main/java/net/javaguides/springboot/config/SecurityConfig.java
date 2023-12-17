@@ -10,12 +10,18 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    // Below Code is from SpringBootWebSecurityConfiguration
     @Bean
-    @Order(SecurityProperties.BASIC_AUTH_ORDER)
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests().anyRequest().authenticated();
-        http.formLogin();
-        http.httpBasic();
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests()
+            .anyRequest()
+            .authenticated()
+            .and()
+            .httpBasic();
+        // After above change, we can comment below two lines
+        // http.formLogin();
+        // http.httpBasic();
         return http.build();
     }
 
