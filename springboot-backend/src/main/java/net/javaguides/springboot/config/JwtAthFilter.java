@@ -4,27 +4,27 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import net.javaguides.springboot.repository.UserDAO;
 import net.javaguides.springboot.util.JWTUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 import java.io.IOException;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 @Component
+@RequiredArgsConstructor
 public class JwtAthFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    private final UserDAO userDAO;
 
-    @Autowired
-    private JWTUtils jwtUtils;
+    private final JWTUtils jwtUtils;
 
     @Override
     protected void doFilterInternal(
@@ -44,7 +44,7 @@ public class JwtAthFilter extends OncePerRequestFilter {
     userEmail = jwtUtils.extractUsername(jwtToken);
     if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+        UserDetails userDetails = userDAO.findUserByEmail(userEmail);
 
         if (jwtUtils.isTokenValid(jwtToken, userDetails)) {
             UsernamePasswordAuthenticationToken authToken =
